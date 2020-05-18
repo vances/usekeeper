@@ -1,7 +1,7 @@
 name: Autotools Build
 on:
   push:
-    branches: [ master ]
+    - tags: v*
 defaults:
   run:
     working-directory: build
@@ -58,4 +58,24 @@ jobs:
     - name: Make release
       run: |
           make install
+    - name: Create release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: ./1.0.0.tar.gz
+        asset_name: 1.0.0.tar.gz
+        asset_content_type: application/gzip
 
