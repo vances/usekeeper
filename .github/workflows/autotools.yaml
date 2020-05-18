@@ -49,4 +49,6 @@ jobs:
         name: test
         path: build/test/log/
       if: always()
+    - name: Release
+      run: make install
 
