@@ -1,7 +1,8 @@
 name: Autotools Build
 on:
   push:
-    tags: v*
+    tags:
+      - v*
 defaults:
   run:
     working-directory: build
