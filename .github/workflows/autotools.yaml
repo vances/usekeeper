@@ -33,7 +33,7 @@ jobs:
         yarn global add polymer-cli
         echo "::add-path::$(yarn global bin)"
     - name: Configure
-      run: ../source/configure
+      run: ERLANG_INSTALL_LIB_DIR=${{ github.workspace }}/lib ../source/configure
     - name: Build
       run: make
     - uses: actions/upload-artifact@v2
